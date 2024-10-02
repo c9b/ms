@@ -196,6 +196,11 @@
         let winnerName = localStorage.getItem('winnerName') || null;
 
         document.addEventListener('DOMContentLoaded', function() {
+            // تحديث أسماء الفرق المخزنة أو استخدام الافتراضية
+            team1Name = localStorage.getItem('team1Name') || 'الفريق 1';
+            team2Name = localStorage.getItem('team2Name') || 'الفريق 2';
+
+            // تعيين الأسماء في الحقول المختلفة
             document.getElementById('team1LabelAbove').textContent = team1Name;
             document.getElementById('team2LabelAbove').textContent = team2Name;
             document.getElementById('team1Header').textContent = team1Name;
@@ -207,6 +212,7 @@
 
             updateProgressBars();
 
+            // عرض النتائج المخزنة مسبقًا
             rounds.forEach(round => {
                 const newRow = `
                     <tr>
@@ -218,8 +224,14 @@
                 document.getElementById('resultsTable').innerHTML += newRow;
             });
 
+            // تحقق من أسماء الفرق في localStorage
             if (team1Name !== 'الفريق 1' && team2Name !== 'الفريق 2') {
+                // إذا كانت الأسماء موجودة، إخفاء نموذج الأسماء وعرض النتائج
+                document.getElementById('teamNamesForm').style.display = 'none';
                 showResultsSection();
+            } else {
+                // إذا كانت الأسماء غير موجودة، تأكد من عرض صندوق الإدخال
+                document.getElementById('teamNamesForm').style.display = 'block';
             }
 
             if (winnerName) {
@@ -232,6 +244,7 @@
                 $('#winnerModal').modal('show');
             }
         });
+
 
         document.getElementById('teamNamesForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -255,6 +268,18 @@
             e.preventDefault();
             const points1 = parseInt(document.getElementById('points1').value);
             const points2 = parseInt(document.getElementById('points2').value);
+
+            // التحقق من أن النقاط غير سالبة
+            if (points1 < 0 || points2 < 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: 'الرجاء إدخال نقاط صحيحة (غير سالبة).',
+                });
+                return;
+            }
+
+
 
             const newRow = `
                 <tr>
@@ -365,6 +390,20 @@
         function showResultsSection() {
             document.getElementById('resultsSection').style.display = 'block';
         }
+
+
+        document.getElementById('resultsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const points1 = parseInt(document.getElementById('points1').value);
+            const points2 = parseInt(document.getElementById('points2').value);
+
+            if (points1 < 0 || points2 < 0) {
+                alert("الرجاء إدخال نقاط صحيحة (غير سالبة).");
+                return;
+            }
+
+            // Proceed with adding points and updating totals...
+        });
     </script>
 </body>
 
