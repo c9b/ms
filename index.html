@@ -165,7 +165,7 @@
                 <div class="winner" id="winnerMessage"></div>
 
                 <!-- Reset Button -->
-                <button id="resetBtn" class="btn btn-danger mt-3">إعادة تعيين السجل</button>
+                <button id="resetBtn" class="btn btn-danger mt-3">إعادة تعيينسي  </button>
             </div>
         </div>
     </div>
@@ -297,11 +297,28 @@
         }
 
         function checkWinner() {
+            // تحقق إذا كانت النقاط أكبر من 152
             if (totalPoints1 >= 152 || totalPoints2 >= 152) {
-                winnerName = totalPoints1 >= 152 ? team1Name : team2Name;
-                localStorage.setItem('winnerName', winnerName);
+                if (totalPoints1 > totalPoints2) {
+                    winnerName = team1Name; // الفريق الأول هو الفائز
+                    showWinnerMessage(winnerName);
+                } else if (totalPoints2 > totalPoints1) {
+                    winnerName = team2Name; // الفريق الثاني هو الفائز
+                    showWinnerMessage(winnerName);
+                } else {
+                    // حالة التعادل، لا نعرض أي فائز
+                    winnerName = null;
+                    console.log("تعادل، تستمر الجولة.");
+                }
+            }
+        }
+
+        // دالة لإظهار رسالة الفائز
+        function showWinnerMessage(winner) {
+            if (winner) {
+                localStorage.setItem('winnerName', winner);
                 const modalMessage = document.getElementById("modalMessage");
-                modalMessage.textContent = `${winnerName} فاز!`;
+                modalMessage.textContent = `${winner} فاز!`;
                 $('#winnerModal').modal({
                     backdrop: 'static',
                     keyboard: false
@@ -309,6 +326,7 @@
                 $('#winnerModal').modal('show');
             }
         }
+
 
         document.getElementById('resetBtn').addEventListener('click', confirmReset);
         document.getElementById('resetModalBtn').addEventListener('click', confirmReset);
