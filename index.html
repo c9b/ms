@@ -231,6 +231,8 @@
             document.getElementById('team2LabelAbove').textContent = team2Name;
             localStorage.setItem('team1Name', team1Name);
             localStorage.setItem('team2Name', team2Name);
+
+            document.getElementById('teamNamesForm').style.display = 'none';
             showResultsSection();
         });
 
