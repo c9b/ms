@@ -176,11 +176,16 @@ function resetGame() {
     totalPoints2 = 0;
     rounds = [];
     winnerName = null;
+    
+    // إعادة تعيين النصوص في العناصر
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
     document.getElementById('resultsTable').innerHTML = ''; // تفريغ الجدول
     updateProgressBars();
-    showResultsSection(); // عرض قسم النتائج
+    
+    // إظهار نموذج إدخال أسماء الفرق
+    document.getElementById('teamNamesForm').style.display = 'block';
+    document.getElementById('resultsSection').style.display = 'none'; // إخفاء قسم النتائج
 }
 
 function deleteRow(button, points1, points2) {
