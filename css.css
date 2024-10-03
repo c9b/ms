@@ -1,18 +1,18 @@
 /* General page styles */
 body {
     font-family: 'Cairo', sans-serif;
-    background-color: #f5f5f5;
+    background-color: #e9ecef;
     margin: 0;
     padding: 0;
 }
 
 .container {
     max-width: 900px;
-    margin: 20px auto;
+    margin: 40px auto;
     background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
@@ -29,7 +29,7 @@ form {
 .row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .col {
@@ -39,10 +39,10 @@ form {
 
 input, button {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
+    padding: 12px;
+    font-size: 18px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     box-sizing: border-box;
 }
 
@@ -58,6 +58,7 @@ button {
     border: none;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -73,7 +74,7 @@ table {
 
 th, td {
     text-align: center;
-    padding: 10px;
+    padding: 15px;
     border-bottom: 1px solid #ddd;
 }
 
@@ -139,6 +140,7 @@ tr:nth-child(even) {
     background-color: #dc3545;
 }
 
+/* Results section */
 #resultsSection {
-    display: block;
+    display: none; /* Initially hidden */
 }
