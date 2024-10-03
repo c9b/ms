@@ -1,97 +1,97 @@
-‏<!DOCTYPE html>
-‏<html lang="ar">
-‏<head>
-‏    <meta charset="UTF-8">
-‏    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-‏    <title>تسجيل النقاط</title>
-‏    <link rel="stylesheet" href="css.css"> <!-- رابط لملف CSS الخاص بك -->
-‏    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-                    <!-- إضافة مكتبة jQuery -->
-‏    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل النقاط</title>
+    <link rel="stylesheet" href="css.css"> <!-- رابط لملف CSS الخاص بك -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- إضافة مكتبة jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- إضافة مكتبة Bootstrap JS -->
-‏    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <!-- إضافة مكتبة SweetAlert (إذا كنت تستخدمها) -->
-‏    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-‏    <script src="js.js" defer></script> <!-- رابط لملف JavaScript -->
-‏</head>
-‏<body>
+    <script src="js.js" defer></script> <!-- رابط لملف JavaScript -->
+</head>
+<body>
 
-‏<div class="container">
-‏        <h1>تسجيل نتائج البلوت</h1>
-‏        <form id="teamNamesForm">
-‏            <div class="row">
-‏                <div class="col">
-‏                    <input type="text" id="team1Name" class="form-control" placeholder="الفريق 1" required>
-‏                </div>
-‏                <div class="col">
-‏                    <input type="text" id="team2Name" class="form-control" placeholder="الفريق 2" required>
-‏                </div>
-‏            </div>
-‏            <button type="submit" class="btn btn-primary">حفظ الأسماء</button>
-‏        </form>
+<div class="container">
+    <h1>تسجيل نتائج البلوت</h1>
+    <form id="teamNamesForm">
+        <div class="row">
+            <div class="col">
+                <input type="text" id="team1Name" class="form-control" placeholder="الفريق 1" required>
+            </div>
+            <div class="col">
+                <input type="text" id="team2Name" class="form-control" placeholder="الفريق 2" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">حفظ الأسماء</button>
+    </form>
 
-‏        <div id="resultsSection">
-‏            <h2>تسجيل النقاط</h2>
-‏            <form id="resultsForm">
-‏                <div class="row">
-‏                    <div class="col">
-‏                        <label id="team1LabelAbove"></label>
-‏                        <input type="number" id="points1" class="form-control" inputmode="numeric" required>
-‏                    </div>
-‏                    <div class="col">
-‏                        <label id="team2LabelAbove"></label>
-‏                        <input type="number" id="points2" class="form-control" inputmode="numeric" required>
-‏                    </div>
-‏                </div>
-‏                <button type="submit" class="btn btn-success">تسجيل النتيجة</button>
-‏            </form>
+    <div id="resultsSection">
+        <h2>تسجيل النقاط</h2>
+        <form id="resultsForm">
+            <div class="row">
+                <div class="col">
+                    <label id="team1LabelAbove"></label>
+                    <input type="number" id="points1" class="form-control" required inputmode="numeric">
+                </div>
+                <div class="col">
+                    <label id="team2LabelAbove"></label>
+                    <input type="number" id="points2" class="form-control" required inputmode="numeric">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">تسجيل النتيجة</button>
+        </form>
 
-‏            <h2>النتائج المسجلة</h2>
-‏            <table class="table table-striped">
-‏                <thead>
-‏                    <tr>
-‏                        <th id="team1Header">نقاط الفريق 1</th>
-‏                        <th id="team2Header">نقاط الفريق 2</th>
-‏                        <th>إجراءات</th>
-‏                    </tr>
-‏                </thead>
-‏                <tbody id="resultsTable"></tbody>
-‏            </table>
+        <h2>النتائج المسجلة</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th id="team1Header">نقاط الفريق 1</th>
+                    <th id="team2Header">نقاط الفريق 2</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="resultsTable"></tbody>
+        </table>
 
-‏            <h2>النقاط الإجمالية</h2>
-‏            <div class="totals-container">
-‏                <div class="total">
-‏                    <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
-‏                    <div class="progress">
-‏                        <div class="progress-bar" id="progress1" style="width: 0%;"></div>
-‏                    </div>
-‏                </div>
-‏                <div class="total">
-‏                    <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
-‏                    <div class="progress">
-‏                        <div class="progress-bar" id="progress2" style="width: 0%;"></div>
-‏                    </div>
-‏                </div>
-‏            </div>
+        <h2>النقاط الإجمالية</h2>
+        <div class="totals-container">
+            <div class="total">
+                <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
+                <div class="progress">
+                    <div class="progress-bar" id="progress1" style="width: 0%;"></div>
+                </div>
+            </div>
+            <div class="total">
+                <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
+                <div class="progress">
+                    <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
 
-‏            <button id="resetBtn" class="btn btn-danger">إعادة تعيين</button>
-‏        </div>
-‏    </div>
+        <button id="resetBtn" class="btn btn-danger">إعادة تعيين</button>
+    </div>
+</div>
 
-‏    <!-- Modal -->
-‏    <div id="winnerModal" class="modal">
-‏        <div class="modal-content">
-‏            <h5 class="modal-title">نتيجة المباراة</h5>
-‏            <p id="modalMessage"></p>
-‏            <div class="modal-footer">
-‏                <button id="resetModalBtn" class="btn btn-secondary">إعادة تعيين</button>
-‏            </div>
-‏        </div>
-‏    </div>
+<!-- Modal -->
+<div id="winnerModal" class="modal">
+    <div class="modal-content">
+        <h5 class="modal-title">نتيجة المباراة</h5>
+        <p id="modalMessage"></p>
+        <div class="modal-footer">
+            <button id="resetModalBtn" class="btn btn-secondary">إعادة تعيين</button>
+        </div>
+    </div>
+</div>
 
-‏<script src="js.js"></script> <!-- تأكد من وجود هذا الملف في نفس المجلد -->
+<script src="js.js"></script> <!-- تأكد من وجود هذا الملف في نفس المجلد -->
 
-‏</body>
-‏</html>
+</body>
+</html>
