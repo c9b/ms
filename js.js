@@ -7,20 +7,11 @@ let winnerName = localStorage.getItem('winnerName') || null;
 
 document.addEventListener('DOMContentLoaded', function() {
     // تحديث أسماء الفرق المخزنة أو استخدام الافتراضية
-    team1Name = localStorage.getItem('team1Name') || 'الفريق 1';
-    team2Name = localStorage.getItem('team2Name') || 'الفريق 2';
+    updateTeamNames();
 
-    // تعيين الأسماء في الحقول المختلفة
-    document.getElementById('team1LabelAbove').textContent = team1Name;
-    document.getElementById('team2LabelAbove').textContent = team2Name;
-    document.getElementById('team1Header').textContent = team1Name;
-    document.getElementById('team2Header').textContent = team2Name;
-    document.getElementById('team1Label').textContent = team1Name;
-    document.getElementById('team2Label').textContent = team2Name;
+    // تعيين النقاط الإجمالية
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
-
-    updateProgressBars();
 
     // عرض النتائج المخزنة مسبقًا
     rounds.forEach(round => {
@@ -34,8 +25,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('resultsTable').innerHTML += newRow;
     });
 
-    // إخفاء النتائج وعرض نموذج الأسماء فقط
-    document.getElementById('resultsSection').style.display = 'none';
+    // إخفاء قسم النتائج وعرض نموذج الأسماء فقط إذا لم يتم إدخال أسماء الفرق
+    if (!localStorage.getItem('team1Name') || !localStorage.getItem('team2Name')) {
+        document.getElementById('resultsSection').style.display = 'none';
+    } else {
+        showResultsSection();
+    }
 });
 
 document.getElementById('teamNamesForm').addEventListener('submit', function(e) {
@@ -44,12 +39,7 @@ document.getElementById('teamNamesForm').addEventListener('submit', function(e) 
     team2Name = document.getElementById('team2Name').value;
 
     // تعيين الأسماء في العناصر المناسبة
-    document.getElementById('team1Header').textContent = team1Name;
-    document.getElementById('team2Header').textContent = team2Name;
-    document.getElementById('team1Label').textContent = team1Name;
-    document.getElementById('team2Label').textContent = team2Name;
-    document.getElementById('team1LabelAbove').textContent = team1Name;
-    document.getElementById('team2LabelAbove').textContent = team2Name;
+    updateTeamNames();
 
     // حفظ الأسماء في localStorage
     localStorage.setItem('team1Name', team1Name);
@@ -98,6 +88,15 @@ document.getElementById('resultsForm').addEventListener('submit', function(e) {
     document.getElementById('points1').value = '';
     document.getElementById('points2').value = '';
 });
+
+function updateTeamNames() {
+    document.getElementById('team1Header').textContent = team1Name;
+    document.getElementById('team2Header').textContent = team2Name;
+    document.getElementById('team1Label').textContent = team1Name;
+    document.getElementById('team2Label').textContent = team2Name;
+    document.getElementById('team1LabelAbove').textContent = team1Name;
+    document.getElementById('team2LabelAbove').textContent = team2Name;
+}
 
 function validatePoints(points1, points2) {
     return !(points1 < 0 || points2 < 0);
@@ -148,8 +147,7 @@ function resetGame() {
     localStorage.removeItem('rounds');
     document.getElementById('resultsTable').innerHTML = '';
     updateProgressBars();
-    document.getElementById('resultsSection').style.display = 'none';
-    document.getElementById('teamNamesForm').style.display = 'block'; // إعادة إظهار حقول إدخال أسماء الفرق
+    showNamesForm(); // إعادة إظهار نموذج إدخال أسماء الفرق
 }
 
 function deleteRow(button, points1, points2) {
@@ -167,4 +165,6 @@ function showResultsSection() {
     document.getElementById('resultsSection').style.display = 'block'; // إظهار قسم النتائج
 }
 
-// يمكنك إخفاء القسم هنا أو في أماكن أخرى حسب الحاجة
+function showNamesForm() {
+    document.getElementById('teamNamesForm').style.display = 'block'; // إظهار نموذج إدخال أسماء الفرق
+}
