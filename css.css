@@ -1,0 +1,84 @@
+body {
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            text-align: center;
+            background-color: #102131;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            color: #fff;
+        }
+        
+        h1 {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .winner {
+            margin-top: 20px;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .btn-primary,
+        .btn-success,
+        .btn-danger {
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        table {
+            margin-top: 20px;
+            color: #fff;
+        }
+        
+        th,
+        td {
+            text-align: center;
+        }
+        
+        .results-container {
+            background-color: #15283b;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .results-header {
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .form-row {
+            margin-bottom: 15px;
+        }
+        
+        .totals-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .total {
+            text-align: center;
+        }
