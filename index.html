@@ -3,44 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل نتائج البلوت</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <title>تسجيل النقاط</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css.css"> <!-- رابط لملف CSS الخاص بك -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js.js" defer></script> <!-- رابط لملف JavaScript -->
+    <style>
+        body {
+            direction: rtl; /* الاتجاه من اليمين لليسار */
+            background-color: #f8f9fa; /* لون الخلفية */
+            font-family: Arial, sans-serif; /* نوع الخط */
+        }
+        .progress {
+            height: 30px; /* ارتفاع شريط التقدم */
+        }
+        #resultsSection {
+            display: none; /* إخفاء قسم النتائج بشكل افتراضي */
+        }
+        #teamNamesForm {
+            margin-top: 20px; /* هامش علوي للنموذج */
+        }
+        table {
+            margin-top: 20px; /* هامش علوي للجدول */
+        }
+    </style>
 </head>
 <body>
-    <div class="container" id="mainContainer">
-    <h1>تسجيل نقاط اللعبة</h1>
-    <form id="teamNamesForm">
-        <div class="row">
-            <div class="col">
-                <input type="text" id="team1Name" placeholder="اسم الفريق 1" required>
-            </div>
-            <div class="col">
-                <input type="text" id="team2Name" placeholder="اسم الفريق 2" required>
-            </div>
-        </div>
-        <button type="submit">ابدأ اللعبة</button>
-    </form>
 
-    <div id="resultsSection">
-        <h2 id="team1Header"></h2>
-        <h2 id="team2Header"></h2>
+<div class="container mt-5">
+    <h1 class="text-center">تسجيل النقاط</h1>
 
-        <form id="resultsForm">
-            <div class="row">
-                <div class="col">
-                    <input type="number" id="points1" placeholder="نقاط الفريق 1" required>
-                </div>
-                <div class="col">
-                    <input type="number" id="points2" placeholder="نقاط الفريق 2" required>
-                </div>
+    <!-- نموذج إدخال أسماء الفرق -->
+    <div id="teamNamesForm">
+        <h3>أدخل أسماء الفرق</h3>
+        <form>
+            <div class="form-group">
+                <input type="text" id="team1Name" class="form-control" placeholder="اسم الفريق 1" required>
             </div>
-            <button type="submit">إضافة نقاط</button>
+            <div class="form-group">
+                <input type="text" id="team2Name" class="form-control" placeholder="اسم الفريق 2" required>
+            </div>
+            <button type="submit" class="btn btn-primary">ابدأ اللعبة</button>
         </form>
+    </div>
 
-        <h2>النتائج</h2>
-        <table id="resultsTable">
+    <!-- قسم النتائج -->
+    <div id="resultsSection">
+        <h2 id="team1Header">الفريق 1</h2>
+        <h2 id="team2Header">الفريق 2</h2>
+        
+        <div class="progress mb-3">
+            <div id="progress1" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="progress mb-3">
+            <div id="progress2" class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="points1">نقاط الفريق 1:</label>
+            <input type="number" id="points1" class="form-control" placeholder="أدخل نقاط الفريق 1" required>
+        </div>
+        <div class="form-group">
+            <label for="points2">نقاط الفريق 2:</label>
+            <input type="number" id="points2" class="form-control" placeholder="أدخل نقاط الفريق 2" required>
+        </div>
+        <button id="addPointsBtn" class="btn btn-success">إضافة النقاط</button>
+
+        <h3>إجمالي النقاط:</h3>
+        <p id="total1">0</p>
+        <p id="total2">0</p>
+
+        <h3>نتائج الجولات:</h3>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>نقاط الفريق 1</th>
@@ -48,26 +83,15 @@
                     <th>إجراء</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="resultsTable"></tbody>
         </table>
 
-        <div class="progress">
-            <div id="progress1" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-        </div>
-        <div class="progress">
-            <div id="progress2" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-        </div>
-
-        <h2>الإجمالي</h2>
-        <div id="totalPoints">
-            <p id="total1">0</p>
-            <p id="total2">0</p>
-        </div>
+        <button id="resetBtn" class="btn btn-danger">إعادة تعيين</button>
     </div>
 </div>
 
-    <script src="js.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</body>
+<!-- ملف JavaScript -->
+<script src="js.js"></script> <!-- تأكد من وجود هذا الملف في نفس المجلد -->
 
+</body>
 </html>
