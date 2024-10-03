@@ -1,103 +1,82 @@
 <!DOCTYPE html>
 <html lang="ar">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل نتائج البلوت</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <div class="container">
         <h1>تسجيل نتائج البلوت</h1>
-
-        <!-- Form for Team Names -->
         <form id="teamNamesForm">
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col">
-                    <input type="text" class="form-control" id="team1Name" placeholder="الفريق 1" required>
+                    <input type="text" id="team1Name" placeholder="الفريق 1" required>
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control" id="team2Name" placeholder="الفريق 2" required>
+                    <input type="text" id="team2Name" placeholder="الفريق 2" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">حفظ الأسماء</button>
+            <button type="submit">حفظ الأسماء</button>
         </form>
 
-        <!-- Results Section -->
-        <div id="resultsSection" class="mt-4" style="display: none;">
-            <div class="results-container">
-                <h2 class="results-header">تسجيل النقاط</h2>
-                <form id="resultsForm">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <label for="points1" class="fw-bold" id="team1LabelAbove"></label>
-                            <input type="number" class="form-control" id="points1" placeholder="" required>
-                        </div>
-                        <div class="col">
-                            <label for="points2" class="fw-bold" id="team2LabelAbove"></label>
-                            <input type="number" class="form-control" id="points2" placeholder="" required>
-                        </div>
+        <div id="resultsSection">
+            <h2>تسجيل النقاط</h2>
+            <form id="resultsForm">
+                <div class="row">
+                    <div class="col">
+                        <label id="team1LabelAbove"></label>
+                        <input type="number" id="points1" required>
                     </div>
-                    <button type="submit" class="btn btn-success">تسجيل النتيجة</button>
-                </form>
-
-                <h2 class="mt-4">النتائج المسجلة</h2>
-                <table class="table table-striped table-dark">
-                    <thead>
-                        <tr>
-                            <th id="team1Header">نقاط الفريق 1</th>
-                            <th id="team2Header">نقاط الفريق 2</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultsTable"></tbody>
-                </table>
-
-                <h2 class="mt-4">النقاط الإجمالية</h2>
-                <div class="totals-container">
-                    <div class="total">
-                        <h2><span id="team1Label"></span>: <span class="badge bg-secondary" id="total1">0</span></h2>
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" id="progress1" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                    </div>
-                    <div class="total">
-                        <h2><span id="team2Label"></span>: <span class="badge bg-secondary" id="total2">0</span></h2>
-                        <div class="progress mb-3">
-                            <div class="progress-bar bg-success" id="progress2" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                    <div class="col">
+                        <label id="team2LabelAbove"></label>
+                        <input type="number" id="points2" required>
                     </div>
                 </div>
+                <button type="submit">تسجيل النتيجة</button>
+            </form>
 
-                <div class="winner" id="winnerMessage"></div>
+            <h2>النتائج المسجلة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="team1Header">نقاط الفريق 1</th>
+                        <th id="team2Header">نقاط الفريق 2</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTable"></tbody>
+            </table>
 
-                <!-- Reset Button -->
-                <button id="resetBtn" class="btn btn-danger mt-3">إعادة تعيين  </button>
+            <h2>النقاط الإجمالية</h2>
+            <div class="totals-container">
+                <div class="total">
+                    <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
+                    <div class="progress">
+                        <div class="progress-bar" id="progress1" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="total">
+                    <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
+                    <div class="progress">
+                        <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+                    </div>
+                </div>
             </div>
+
+            <button id="resetBtn">إعادة تعيين</button>
         </div>
     </div>
 
-    <!-- Modal Structure -->
-    <div id="winnerModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">نتيجة المباراة</h5>
-                </div>
-                <div class="modal-body">
-                    <p id="modalMessage"></p>
-                </div>
-                <div class="modal-footer">
-                    <button id="resetModalBtn" class="btn btn-danger">إعادة تعيين</button>
-                </div>
+    <!-- Modal -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <h5 class="modal-title">نتيجة المباراة</h5>
+            <p id="modalMessage"></p>
+            <div class="modal-footer">
+                <button id="resetModalBtn">إعادة تعيين</button>
             </div>
         </div>
     </div>
