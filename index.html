@@ -31,64 +31,79 @@
 </head>
 <body>
 
-<div class="container mt-5">
-    <h1 class="text-center">تسجيل النقاط</h1>
-
-    <!-- نموذج إدخال أسماء الفرق -->
-    <div id="teamNamesForm">
-        <h3>أدخل أسماء الفرق</h3>
-        <form>
-            <div class="form-group">
-                <input type="text" id="team1Name" class="form-control" placeholder="اسم الفريق 1" required>
+<div class="container">
+        <h1>تسجيل نتائج البلوت</h1>
+        <form id="teamNamesForm">
+            <div class="row">
+                <div class="col">
+                    <input type="text" id="team1Name" placeholder="الفريق 1" required>
+                </div>
+                <div class="col">
+                    <input type="text" id="team2Name" placeholder="الفريق 2" required>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="text" id="team2Name" class="form-control" placeholder="اسم الفريق 2" required>
-            </div>
-            <button type="submit" class="btn btn-primary">ابدأ اللعبة</button>
+            <button type="submit">حفظ الأسماء</button>
         </form>
+
+        <div id="resultsSection">
+            <h2>تسجيل النقاط</h2>
+            <form id="resultsForm">
+                <div class="row">
+                    <div class="col">
+                        <label id="team1LabelAbove"></label>
+                        <input type="number" id="points1" required>
+                    </div>
+                    <div class="col">
+                        <label id="team2LabelAbove"></label>
+                        <input type="number" id="points2" required>
+                    </div>
+                </div>
+                <button type="submit">تسجيل النتيجة</button>
+            </form>
+
+            <h2>النتائج المسجلة</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th id="team1Header">نقاط الفريق 1</th>
+                        <th id="team2Header">نقاط الفريق 2</th>
+                        <th>إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTable"></tbody>
+            </table>
+
+            <h2>النقاط الإجمالية</h2>
+            <div class="totals-container">
+                <div class="total">
+                    <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
+                    <div class="progress">
+                        <div class="progress-bar" id="progress1" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="total">
+                    <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
+                    <div class="progress">
+                        <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="resetBtn">إعادة تعيين</button>
+        </div>
     </div>
 
-    <!-- قسم النتائج -->
-    <div id="resultsSection">
-        <h2 id="team1Header">الفريق 1</h2>
-        <h2 id="team2Header">الفريق 2</h2>
-        
-        <div class="progress mb-3">
-            <div id="progress1" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    <!-- Modal -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <h5 class="modal-title">نتيجة المباراة</h5>
+            <p id="modalMessage"></p>
+            <div class="modal-footer">
+                <button id="resetModalBtn">إعادة تعيين</button>
+            </div>
         </div>
-        <div class="progress mb-3">
-            <div id="progress2" class="progress-bar bg-info" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="points1">نقاط الفريق 1:</label>
-            <input type="number" id="points1" class="form-control" placeholder="أدخل نقاط الفريق 1" required>
-        </div>
-        <div class="form-group">
-            <label for="points2">نقاط الفريق 2:</label>
-            <input type="number" id="points2" class="form-control" placeholder="أدخل نقاط الفريق 2" required>
-        </div>
-        <button id="addPointsBtn" class="btn btn-success">إضافة النقاط</button>
-
-        <h3>إجمالي النقاط:</h3>
-        <p id="total1">0</p>
-        <p id="total2">0</p>
-
-        <h3>نتائج الجولات:</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>نقاط الفريق 1</th>
-                    <th>نقاط الفريق 2</th>
-                    <th>إجراء</th>
-                </tr>
-            </thead>
-            <tbody id="resultsTable"></tbody>
-        </table>
-
-        <button id="resetBtn" class="btn btn-danger">إعادة تعيين</button>
     </div>
-</div>
+
 
 <!-- ملف JavaScript -->
 <script src="js.js"></script> <!-- تأكد من وجود هذا الملف في نفس المجلد -->
