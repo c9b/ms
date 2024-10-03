@@ -1,8 +1,7 @@
-/* General page styles */
 body {
     font-family: 'Cairo', sans-serif;
     direction: rtl;
-    background-color: #e9ecef;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
 }
@@ -47,45 +46,27 @@ input, button {
     box-sizing: border-box;
 }
 
-input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
 /* Button styling */
 button {
-    background-color: #007bff;
-    color: white;
-    border: none;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
-}
-
 /* Table styling */
-table {
+.table {
     width: 100%;
     margin-top: 20px;
-    border-collapse: collapse;
 }
 
 th, td {
     text-align: center;
     padding: 15px;
-    border-bottom: 1px solid #ddd;
 }
 
 th {
     background-color: #007bff;
     color: white;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
 }
 
 /* Progress Bar */
@@ -133,19 +114,11 @@ tr:nth-child(even) {
     margin-bottom: 15px;
 }
 
-.modal-footer {
-    margin-top: 20px;
-}
-
-.modal-footer button {
-    background-color: #dc3545;
-}
-
 /* Results section */
 #resultsSection {
-    display: none; /* Initially hidden */
+    display: none;
 }
 
 #teamNamesForm {
-            margin-top: 20px; /* هامش علوي للنموذج */
-        }
+    margin-top: 20px;
+}
