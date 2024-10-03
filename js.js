@@ -1,189 +1,218 @@
-let totalPoints1 = parseInt(localStorage.getItem('totalPoints1')) || 0;
-let totalPoints2 = parseInt(localStorage.getItem('totalPoints2')) || 0;
-let team1Name = localStorage.getItem('team1Name') || 'الفريق 1';
-let team2Name = localStorage.getItem('team2Name') || 'الفريق 2';
-let rounds = JSON.parse(localStorage.getItem('rounds')) || [];
-let winnerName = localStorage.getItem('winnerName') || null;
 
-document.addEventListener('DOMContentLoaded', function() {
-    // تحديث أسماء الفرق
-    updateTeamNames();
+        let totalPoints1 = parseInt(localStorage.getItem('totalPoints1')) || 0;
+        let totalPoints2 = parseInt(localStorage.getItem('totalPoints2')) || 0;
+        let team1Name = localStorage.getItem('team1Name') || 'الفريق 1';
+        let team2Name = localStorage.getItem('team2Name') || 'الفريق 2';
+        let rounds = JSON.parse(localStorage.getItem('rounds')) || [];
+        let winnerName = localStorage.getItem('winnerName') || null;
 
-    // تعيين النقاط الإجمالية
-    document.getElementById('total1').textContent = totalPoints1;
-    document.getElementById('total2').textContent = totalPoints2;
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحديث أسماء الفرق المخزنة أو استخدام الافتراضية
+            team1Name = localStorage.getItem('team1Name') || 'الفريق 1';
+            team2Name = localStorage.getItem('team2Name') || 'الفريق 2';
 
-    // عرض النتائج المخزنة مسبقًا
-    rounds.forEach(round => {
-        const newRow = `
-            <tr>
-                <td>${round.points1}</td>
-                <td>${round.points2}</td>
-                <td><button class="btn btn-danger" onclick="deleteRow(this, ${round.points1}, ${round.points2})">حذف</button></td>
-            </tr>
-        `;
-        document.getElementById('resultsTable').innerHTML += newRow;
-    });
+            // تعيين الأسماء في الحقول المختلفة
+            document.getElementById('team1LabelAbove').textContent = team1Name;
+            document.getElementById('team2LabelAbove').textContent = team2Name;
+            document.getElementById('team1Header').textContent = team1Name;
+            document.getElementById('team2Header').textContent = team2Name;
+            document.getElementById('team1Label').textContent = team1Name;
+            document.getElementById('team2Label').textContent = team2Name;
+            document.getElementById('total1').textContent = totalPoints1;
+            document.getElementById('total2').textContent = totalPoints2;
 
-    // تحقق من وجود أسماء الفرق في localStorage
-    if (!localStorage.getItem('team1Name') || !localStorage.getItem('team2Name')) {
-        document.getElementById('resultsSection').style.display = 'none';
-        document.getElementById('teamNamesForm').style.display = 'block'; // إظهار نموذج الأسماء
-    } else {
-        showResultsSection();
-    }
-});
+            updateProgressBars();
 
-document.getElementById('teamNamesForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    team1Name = document.getElementById('team1Name').value;
-    team2Name = document.getElementById('team2Name').value;
+            // عرض النتائج المخزنة مسبقًا
+            rounds.forEach(round => {
+                const newRow = `
+                    <tr>
+                        <td>${round.points1}</td>
+                        <td>${round.points2}</td>
+                        <td><button class="btn btn-danger" onclick="deleteRow(this, ${round.points1}, ${round.points2})">حذف</button></td>
+                    </tr>
+                `;
+                document.getElementById('resultsTable').innerHTML += newRow;
+            });
 
-    // تعيين الأسماء في العناصر المناسبة
-    updateTeamNames();
+            // تحقق من أسماء الفرق في localStorage
+            if (team1Name !== 'الفريق 1' && team2Name !== 'الفريق 2') {
+                // إذا كانت الأسماء موجودة، إخفاء نموذج الأسماء وعرض النتائج
+                document.getElementById('teamNamesForm').style.display = 'none';
+                showResultsSection();
+            } else {
+                // إذا كانت الأسماء غير موجودة، تأكد من عرض صندوق الإدخال
+                document.getElementById('teamNamesForm').style.display = 'block';
+            }
 
-    // حفظ الأسماء في localStorage
-    localStorage.setItem('team1Name', team1Name);
-    localStorage.setItem('team2Name', team2Name);
+            if (winnerName) {
+                const modalMessage = document.getElementById("modalMessage");
+                modalMessage.textContent = `${winnerName} فاز!`;
+                $('#winnerModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#winnerModal').modal('show');
+            }
+        });
 
-    // إخفاء نموذج الأسماء وعرض النتائج
-    document.getElementById('teamNamesForm').style.display = 'none';
-    showResultsSection();
-});
 
-document.getElementById('resultsForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const points1 = parseInt(document.getElementById('points1').value);
-    const points2 = parseInt(document.getElementById('points2').value);
+        document.getElementById('teamNamesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            team1Name = document.getElementById('team1Name').value;
+            team2Name = document.getElementById('team2Name').value;
 
-    // التحقق من أن النقاط غير سالبة
-    if (!validatePoints(points1, points2)) {
-        return;
-    }
+            document.getElementById('team1Header').textContent = team1Name;
+            document.getElementById('team2Header').textContent = team2Name;
+            document.getElementById('team1Label').textContent = team1Name;
+            document.getElementById('team2Label').textContent = team2Name;
+            document.getElementById('team1LabelAbove').textContent = team1Name;
+            document.getElementById('team2LabelAbove').textContent = team2Name;
+            localStorage.setItem('team1Name', team1Name);
+            localStorage.setItem('team2Name', team2Name);
 
-    const newRow = `
-        <tr>
-            <td>${points1}</td>
-            <td>${points2}</td>
-            <td><button class="btn btn-danger" onclick="deleteRow(this, ${points1}, ${points2})">حذف</button></td>
-        </tr>
-    `;
-    document.getElementById('resultsTable').innerHTML += newRow;
+            document.getElementById('teamNamesForm').style.display = 'none';
+            showResultsSection();
+        });
 
-    totalPoints1 += points1;
-    totalPoints2 += points2;
+        document.getElementById('resultsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const points1 = parseInt(document.getElementById('points1').value);
+            const points2 = parseInt(document.getElementById('points2').value);
 
-    document.getElementById('total1').textContent = totalPoints1;
-    document.getElementById('total2').textContent = totalPoints2;
+            // التحقق من أن النقاط غير سالبة
+            if (points1 < 0 || points2 < 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ!',
+                    text: 'الرجاء إدخال نقاط صحيحة (غير سالبة).',
+                });
+                return;
+            }
 
-    rounds.push({
-        points1,
-        points2
-    });
-    localStorage.setItem('rounds', JSON.stringify(rounds));
-    localStorage.setItem('totalPoints1', totalPoints1);
-    localStorage.setItem('totalPoints2', totalPoints2);
 
-    updateProgressBars();
-    checkWinner();
-    document.getElementById('points1').value = '';
-    document.getElementById('points2').value = '';
-});
 
-function updateTeamNames() {
-    document.getElementById('team1Header').textContent = team1Name;
-    document.getElementById('team2Header').textContent = team2Name;
-    document.getElementById('team1Label').textContent = team1Name;
-    document.getElementById('team2Label').textContent = team2Name;
-    document.getElementById('team1LabelAbove').textContent = team1Name;
-    document.getElementById('team2LabelAbove').textContent = team2Name;
-}
+            const newRow = `
+                <tr>
+                    <td>${points1}</td>
+                    <td>${points2}</td>
+                    <td><button class="btn btn-danger" onclick="deleteRow(this, ${points1}, ${points2})">حذف</button></td>
+                </tr>
+            `;
+            document.getElementById('resultsTable').innerHTML += newRow;
 
-function validatePoints(points1, points2) {
-    if (points1 < 0 || points2 < 0) {
-        alert("الرجاء إدخال نقاط صحيحة (غير سالبة).");
-        return false;
-    }
-    return true;
-}
+            totalPoints1 += points1;
+            totalPoints2 += points2;
 
-function updateProgressBars() {
-    const progress1 = (totalPoints1 / 152) * 100;
-    const progress2 = (totalPoints2 / 152) * 100;
+            document.getElementById('total1').textContent = totalPoints1;
+            document.getElementById('total2').textContent = totalPoints2;
 
-    document.getElementById('progress1').style.width = `${progress1}%`;
-    document.getElementById('progress1').setAttribute('aria-valuenow', progress1);
-    document.getElementById('progress2').style.width = `${progress2}%`;
-    document.getElementById('progress2').setAttribute('aria-valuenow', progress2);
-}
+            rounds.push({
+                points1,
+                points2
+            });
+            localStorage.setItem('rounds', JSON.stringify(rounds));
+            localStorage.setItem('totalPoints1', totalPoints1);
+            localStorage.setItem('totalPoints2', totalPoints2);
 
-function checkWinner() {
-    if (totalPoints1 >= 152 || totalPoints2 >= 152) {
-        if (totalPoints1 > totalPoints2) {
-            winnerName = team1Name;
-            showWinnerMessage(winnerName);
-        } else if (totalPoints2 > totalPoints1) {
-            winnerName = team2Name;
-            showWinnerMessage(winnerName);
-        } else {
-            winnerName = null;
-            console.log("تعادل، تستمر الجولة.");
+            updateProgressBars();
+            checkWinner();
+            document.getElementById('points1').value = '';
+            document.getElementById('points2').value = '';
+        });
+
+        function updateProgressBars() {
+            const progress1 = (totalPoints1 / 152) * 100;
+            const progress2 = (totalPoints2 / 152) * 100;
+
+            document.getElementById('progress1').style.width = `${progress1}%`;
+            document.getElementById('progress1').setAttribute('aria-valuenow', progress1);
+
+            document.getElementById('progress2').style.width = `${progress2}%`;
+            document.getElementById('progress2').setAttribute('aria-valuenow', progress2);
         }
-    }
-}
 
-function showWinnerMessage(winner) {
-    Swal.fire({
-        icon: 'success',
-        title: `${winner} فاز!`,
-        text: 'تهانينا!',
-    }).then(() => {
-        resetGame(); // إعادة تعيين القيم
-    });
-}
+        function checkWinner() {
+            // تحقق إذا كانت النقاط أكبر من 152
+            if (totalPoints1 >= 152 || totalPoints2 >= 152) {
+                if (totalPoints1 > totalPoints2) {
+                    winnerName = team1Name; // الفريق الأول هو الفائز
+                    showWinnerMessage(winnerName);
+                } else if (totalPoints2 > totalPoints1) {
+                    winnerName = team2Name; // الفريق الثاني هو الفائز
+                    showWinnerMessage(winnerName);
+                } else {
+                    // حالة التعادل، لا نعرض أي فائز
+                    winnerName = null;
+                    console.log("تعادل، تستمر الجولة.");
+                }
+            }
+        }
 
-function resetGame() {
-    // إعادة تعيين النقاط والقيم
-    totalPoints1 = 0;
-    totalPoints2 = 0;
-    rounds = [];
-    localStorage.removeItem('totalPoints1');
-    localStorage.removeItem('totalPoints2');
-    localStorage.removeItem('rounds');
-    localStorage.removeItem('team1Name');
-    localStorage.removeItem('team2Name');
-    localStorage.removeItem('winnerName');
-    document.getElementById('resultsTable').innerHTML = '';
-    document.getElementById('total1').textContent = totalPoints1;
-    document.getElementById('total2').textContent = totalPoints2;
-    updateProgressBars();
-    showNamesForm(); // إعادة إظهار نموذج إدخال أسماء الفرق
-}
+        // دالة لإظهار رسالة الفائز
+        function showWinnerMessage(winner) {
+            if (winner) {
+                localStorage.setItem('winnerName', winner);
+                const modalMessage = document.getElementById("modalMessage");
+                modalMessage.textContent = `${winner} فاز!`;
+                $('#winnerModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                $('#winnerModal').modal('show');
+            }
+        }
 
-function deleteRow(button, points1, points2) {
-    // حذف الصف
-    const row = button.closest('tr');
-    row.remove(); 
 
-    totalPoints1 -= points1;
-    totalPoints2 -= points2;
+        document.getElementById('resetBtn').addEventListener('click', confirmReset);
+        document.getElementById('resetModalBtn').addEventListener('click', confirmReset);
 
-    localStorage.setItem('totalPoints1', totalPoints1);
-    localStorage.setItem('totalPoints2', totalPoints2);
-    document.getElementById('total1').textContent = totalPoints1;
-    document.getElementById('total2').textContent = totalPoints2;
+        function confirmReset() {
+            const confirmAction = confirm("هل أنت متأكد أنك تريد إعادة تعيين السجل؟ لا يمكن التراجع عن هذا الإجراء.");
+            if (confirmAction) {
+                resetGame();
+            }
+        }
 
-    // تحديث قائمة الجولات
-    rounds = rounds.filter(round => !(round.points1 === points1 && round.points2 === points2));
-    localStorage.setItem('rounds', JSON.stringify(rounds));
+        function resetGame() {
+            localStorage.clear();
+            location.reload();
+        }
 
-    updateProgressBars();
-}
+        function deleteRow(button, points1, points2) {
+            totalPoints1 -= points1;
+            totalPoints2 -= points2;
 
-function showResultsSection() {
-    document.getElementById('resultsSection').style.display = 'block'; // إظهار قسم النتائج
-}
+            document.getElementById('total1').textContent = totalPoints1;
+            document.getElementById('total2').textContent = totalPoints2;
 
-function showNamesForm() {
-    document.getElementById('teamNamesForm').style.display = 'block'; // إظهار نموذج إدخال أسماء الفرق
-}
+            localStorage.setItem('totalPoints1', totalPoints1);
+            localStorage.setItem('totalPoints2', totalPoints2);
+
+            rounds = rounds.filter(round => !(round.points1 === points1 && round.points2 === points2));
+            localStorage.setItem('rounds', JSON.stringify(rounds));
+
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+
+            updateProgressBars();
+        }
+
+        function showResultsSection() {
+            document.getElementById('resultsSection').style.display = 'block';
+        }
+
+
+        document.getElementById('resultsForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const points1 = parseInt(document.getElementById('points1').value);
+            const points2 = parseInt(document.getElementById('points2').value);
+
+            if (points1 < 0 || points2 < 0) {
+                alert("الرجاء إدخال نقاط صحيحة (غير سالبة).");
+                return;
+            }
+
+            // Proceed with adding points and updating totals...
+        });
+    
