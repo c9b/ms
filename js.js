@@ -184,7 +184,10 @@ function resetGame() {
     updateProgressBars();
     
     // إغلاق النافذة المنبثقة (إذا كانت مفتوحة)
-    $('#winnerModal').modal('hide');
+    const winnerModal = $('#winnerModal');
+    if (winnerModal.hasClass('show')) {
+        winnerModal.modal('hide');
+    }
     
     // إظهار نموذج إدخال أسماء الفرق
     document.getElementById('teamNamesForm').style.display = 'block';
