@@ -1,7 +1,7 @@
 body {
     font-family: 'Cairo', sans-serif;
     direction: rtl;
-    background-color: #f8f9fa;
+    background-color: #e9ecef;
     margin: 0;
     padding: 0;
 }
@@ -9,16 +9,16 @@ body {
 .container {
     max-width: 900px;
     margin: 40px auto;
-    background-color: white;
+    background-color: #ffffff;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 /* Header */
 h1, h2 {
     text-align: center;
-    color: #333;
+    color: #343a40;
 }
 
 /* Form styling */
@@ -32,17 +32,12 @@ form {
     margin-bottom: 20px;
 }
 
-.col {
-    flex: 1;
-    margin: 0 10px;
-}
-
 input, button {
     width: 100%;
     padding: 12px;
     font-size: 18px;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     box-sizing: border-box;
 }
 
@@ -51,6 +46,10 @@ button {
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
 }
 
 /* Table styling */
