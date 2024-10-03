@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // إخفاء قسم النتائج وعرض نموذج الأسماء فقط إذا لم يتم إدخال أسماء الفرق
     if (!localStorage.getItem('team1Name') || !localStorage.getItem('team2Name')) {
         document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('teamNamesForm').style.display = 'block'; // إظهار نموذج الأسماء
     } else {
         showResultsSection();
     }
@@ -99,7 +100,11 @@ function updateTeamNames() {
 }
 
 function validatePoints(points1, points2) {
-    return !(points1 < 0 || points2 < 0);
+    if (points1 < 0 || points2 < 0) {
+        alert("الرجاء إدخال نقاط صحيحة (غير سالبة).");
+        return false;
+    }
+    return true;
 }
 
 function updateProgressBars() {
@@ -145,6 +150,9 @@ function resetGame() {
     localStorage.removeItem('totalPoints1');
     localStorage.removeItem('totalPoints2');
     localStorage.removeItem('rounds');
+    localStorage.removeItem('team1Name');
+    localStorage.removeItem('team2Name');
+    localStorage.removeItem('winnerName');
     document.getElementById('resultsTable').innerHTML = '';
     updateProgressBars();
     showNamesForm(); // إعادة إظهار نموذج إدخال أسماء الفرق
