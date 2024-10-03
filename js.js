@@ -176,22 +176,14 @@ function resetGame() {
     totalPoints2 = 0;
     rounds = [];
     winnerName = null;
-    
-    // إعادة تعيين النصوص في العناصر
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
     document.getElementById('resultsTable').innerHTML = ''; // تفريغ الجدول
     updateProgressBars();
-    
-    // إغلاق النافذة المنبثقة (إذا كانت مفتوحة)
-    const winnerModal = $('#winnerModal');
-    if (winnerModal.hasClass('show')) {
-        winnerModal.modal('hide');
-    }
-    
-    // إظهار نموذج إدخال أسماء الفرق
-    document.getElementById('teamNamesForm').style.display = 'block';
-    document.getElementById('resultsSection').style.display = 'none'; // إخفاء قسم النتائج
+    showResultsSection(); // عرض قسم النتائج
+
+    // تحديث الصفحة
+    location.reload(); // تحديث الصفحة بعد إعادة التعيين
 }
 
 function deleteRow(button, points1, points2) {
