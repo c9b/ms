@@ -6,7 +6,7 @@ let rounds = JSON.parse(localStorage.getItem('rounds')) || [];
 let winnerName = localStorage.getItem('winnerName') || null;
 
 document.addEventListener('DOMContentLoaded', function() {
-    // تحديث أسماء الفرق المخزنة أو استخدام الافتراضية
+    // تحديث أسماء الفرق
     updateTeamNames();
 
     // تعيين النقاط الإجمالية
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('resultsTable').innerHTML += newRow;
     });
 
-    // إخفاء قسم النتائج وعرض نموذج الأسماء فقط إذا لم يتم إدخال أسماء الفرق
+    // تحقق من وجود أسماء الفرق في localStorage
     if (!localStorage.getItem('team1Name') || !localStorage.getItem('team2Name')) {
         document.getElementById('resultsSection').style.display = 'none';
         document.getElementById('teamNamesForm').style.display = 'block'; // إظهار نموذج الأسماء
@@ -138,12 +138,12 @@ function showWinnerMessage(winner) {
         title: `${winner} فاز!`,
         text: 'تهانينا!',
     }).then(() => {
-        // إعادة تعيين القيم
-        resetGame();
+        resetGame(); // إعادة تعيين القيم
     });
 }
 
 function resetGame() {
+    // إعادة تعيين النقاط والقيم
     totalPoints1 = 0;
     totalPoints2 = 0;
     rounds = [];
@@ -154,18 +154,29 @@ function resetGame() {
     localStorage.removeItem('team2Name');
     localStorage.removeItem('winnerName');
     document.getElementById('resultsTable').innerHTML = '';
+    document.getElementById('total1').textContent = totalPoints1;
+    document.getElementById('total2').textContent = totalPoints2;
     updateProgressBars();
     showNamesForm(); // إعادة إظهار نموذج إدخال أسماء الفرق
 }
 
 function deleteRow(button, points1, points2) {
-    button.closest('tr').remove(); // حذف الصف
+    // حذف الصف
+    const row = button.closest('tr');
+    row.remove(); 
+
     totalPoints1 -= points1;
     totalPoints2 -= points2;
+
     localStorage.setItem('totalPoints1', totalPoints1);
     localStorage.setItem('totalPoints2', totalPoints2);
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
+
+    // تحديث قائمة الجولات
+    rounds = rounds.filter(round => !(round.points1 === points1 && round.points2 === points2));
+    localStorage.setItem('rounds', JSON.stringify(rounds));
+
     updateProgressBars();
 }
 
