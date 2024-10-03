@@ -183,10 +183,22 @@ function resetGame() {
     document.getElementById('resultsTable').innerHTML = ''; // تفريغ الجدول
     updateProgressBars();
     
+    // إغلاق النافذة المنبثقة (إذا كانت مفتوحة)
+    const winnerModal = $('#winnerModal');
+    if (winnerModal.hasClass('show')) {
+        winnerModal.modal('hide');
+    }
+    
     // إظهار نموذج إدخال أسماء الفرق
     document.getElementById('teamNamesForm').style.display = 'block';
     document.getElementById('resultsSection').style.display = 'none'; // إخفاء قسم النتائج
 }
+
+// إضافة مستمع للحدث على زر إعادة تعيين في النافذة المنبثقة
+document.getElementById('resetModalBtn').addEventListener('click', function() {
+    resetGame(); // استدعاء دالة resetGame
+    $('#winnerModal').modal('hide'); // إغلاق النافذة المنبثقة
+});
 
 function deleteRow(button, points1, points2) {
     totalPoints1 -= points1;
