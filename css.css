@@ -1,6 +1,7 @@
 /* General page styles */
 body {
     font-family: 'Cairo', sans-serif;
+    direction: rtl;
     background-color: #e9ecef;
     margin: 0;
     padding: 0;
@@ -144,3 +145,7 @@ tr:nth-child(even) {
 #resultsSection {
     display: none; /* Initially hidden */
 }
+
+#teamNamesForm {
+            margin-top: 20px; /* هامش علوي للنموذج */
+        }
