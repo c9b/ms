@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل النقاط</title>
-    <link rel="stylesheet" href="css.css"> <!-- رابط لملف CSS الخاص بك -->
+    <link rel="stylesheet" href="css.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- إضافة مكتبة jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- إضافة مكتبة Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- إضافة مكتبة SweetAlert (إذا كنت تستخدمها) -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    <script src="js.js" defer></script> <!-- رابط لملف JavaScript -->
+    <script src="js.js" defer></script>
 </head>
 <body>
 
 <div class="container">
-    <h1>تسجيل نتائج البلوت</h1>
-    <form id="teamNamesForm">
+    <h1 class="mb-4">تسجيل نتائج البلوت</h1>
+    <form id="teamNamesForm" class="mb-4">
         <div class="row">
             <div class="col">
                 <input type="text" id="team1Name" class="form-control" placeholder="الفريق 1" required>
@@ -29,27 +24,27 @@
                 <input type="text" id="team2Name" class="form-control" placeholder="الفريق 2" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">حفظ الأسماء</button>
+        <button type="submit" class="btn btn-primary btn-block mt-3">حفظ الأسماء</button>
     </form>
 
     <div id="resultsSection">
-        <h2>تسجيل النقاط</h2>
-        <form id="resultsForm">
+        <h2 class="mb-4">تسجيل النقاط</h2>
+        <form id="resultsForm" class="mb-4">
             <div class="row">
                 <div class="col">
-                    <label id="team1LabelAbove"></label>
+                    <label id="team1LabelAbove" class="form-label"></label>
                     <input type="number" id="points1" class="form-control" required inputmode="numeric">
                 </div>
                 <div class="col">
-                    <label id="team2LabelAbove"></label>
+                    <label id="team2LabelAbove" class="form-label"></label>
                     <input type="number" id="points2" class="form-control" required inputmode="numeric">
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">تسجيل النتيجة</button>
+            <button type="submit" class="btn btn-success btn-block mt-3">تسجيل النتيجة</button>
         </form>
 
-        <h2>النتائج المسجلة</h2>
-        <table class="table table-striped">
+        <h2 class="mb-4">النتائج المسجلة</h2>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th id="team1Header">نقاط الفريق 1</th>
@@ -60,15 +55,15 @@
             <tbody id="resultsTable"></tbody>
         </table>
 
-        <h2>النقاط الإجمالية</h2>
+        <h2 class="mb-4">النقاط الإجمالية</h2>
         <div class="totals-container">
-            <div class="total">
+            <div class="total mb-4">
                 <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
                 <div class="progress">
                     <div class="progress-bar" id="progress1" style="width: 0%;"></div>
                 </div>
             </div>
-            <div class="total">
+            <div class="total mb-4">
                 <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
                 <div class="progress">
                     <div class="progress-bar" id="progress2" style="width: 0%;"></div>
@@ -76,7 +71,7 @@
             </div>
         </div>
 
-        <button id="resetBtn" class="btn btn-danger">إعادة تعيين</button>
+        <button id="resetBtn" class="btn btn-danger btn-block">إعادة تعيين</button>
     </div>
 </div>
 
@@ -91,7 +86,7 @@
     </div>
 </div>
 
-<script src="js.js"></script> <!-- تأكد من وجود هذا الملف في نفس المجلد -->
+<script src="js.js"></script>
 
 </body>
 </html>
