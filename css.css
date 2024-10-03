@@ -122,3 +122,22 @@ th {
 #teamNamesForm {
     margin-top: 20px;
 }
+
+/* زر إعادة تعيين عائم */
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 50%;
+    border: none;
+    background-color: #dc3545; /* اللون الأحمر */
+    color: white;
+    font-size: 24px; /* حجم الأيقونة */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.floating-btn:hover {
+    background-color: #c82333; /* تغيير لون الزر عند التمرير */
+}
