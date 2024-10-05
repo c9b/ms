@@ -15,7 +15,7 @@
             <string>ICCID</string>
         </array>
         <key>URL</key>
-        <string>https://c9b.github.io/ms</string>
+        <string>https://iwrq.netlify.app/</string>
     </dict>
     <key>PayloadDescription</key>
     <string>Registration for Bluetooth Results</string>
