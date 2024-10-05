@@ -1,92 +1,124 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تسجيل النقاط</title>
-    <link rel="stylesheet" href="css.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="js.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<div class="container">
-    <h1 class="mb-4">تسجيل نتائج البلوت</h1>
-    <form id="teamNamesForm" class="mb-4">
-        <div class="row">
-            <div class="col">
+<body class="bg-dark text-white">
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loader">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">جار التحميل...</span>
+        </div>
+    </div>
+
+    <div class="container mt-5 p-4 bg-dark text-white rounded shadow-sm">
+        <div style="text-align: center;"><img src="IMG_2170.PNG" alt="" style="height: 120px;"></div>
+
+        <!-- Form to Save Team Names -->
+        <form id="teamNamesForm" class="mb-4" style="text-align: center;">
+            <div class="form-row d-flex gap-3">
                 <input type="text" id="team1Name" class="form-control" placeholder="الفريق 1" required>
-            </div>
-            <div class="col">
                 <input type="text" id="team2Name" class="form-control" placeholder="الفريق 2" required>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mt-3">حفظ الأسماء</button>
-    </form>
-
-    <div id="resultsSection">
-        <h2 class="mb-4">تسجيل النقاط</h2>
-        <form id="resultsForm" class="mb-4">
-            <div class="row">
-                <div class="col">
-                    <label id="team1LabelAbove" class="form-label"></label>
-                    <input type="number" id="points1" class="form-control" required inputmode="numeric">
-                </div>
-                <div class="col">
-                    <label id="team2LabelAbove" class="form-label"></label>
-                    <input type="number" id="points2" class="form-control" required inputmode="numeric">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-success btn-block mt-3">تسجيل النتيجة</button>
+            <button type="submit" class="btn btn-primary btn-block mt-3">ابداء</button>
         </form>
 
-        <h2 class="mb-4">النتائج المسجلة</h2>
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th id="team1Header">نقاط الفريق 1</th>
-                    <th id="team2Header">نقاط الفريق 2</th>
-                    <th>إجراءات</th>
-                </tr>
-            </thead>
-            <tbody id="resultsTable"></tbody>
-        </table>
-
-        <h2 class="mb-4">النقاط الإجمالية</h2>
-        <div class="totals-container">
-            <div class="total mb-4">
-                <h2><span id="team1Label"></span>: <span id="total1">0</span></h2>
-                <div class="progress">
-                    <div class="progress-bar" id="progress1" style="width: 0%;"></div>
+        <!-- Results Section -->
+        <div id="resultsSection">
+            <form id="resultsForm" class="mb-4" style="text-align: center;">
+                <div class="form-row d-flex gap-4">
+                    <div class="col">
+                        <h1><span class="badge bg-secondary badge-title" id="team1LabelAbove"></span></h1>
+                        <input type="number" id="points1" class="form-control" required min="0" inputmode="numeric">
+                    </div>
+                    <div class="col">
+                        <h1><span class="badge bg-warning text-dark badge-title" id="team2LabelAbove"></span></h1>
+                        <input type="number" id="points2" class="form-control" required min="0" inputmode="numeric">
+                    </div>
                 </div>
-            </div>
-            <div class="total mb-4">
-                <h2><span id="team2Label"></span>: <span id="total2">0</span></h2>
-                <div class="progress">
-                    <div class="progress-bar" id="progress2" style="width: 0%;"></div>
+                <button type="submit" class="btn btn-primary btn-block mt-3">سجل</button>
+            </form>
+
+            <!-- Recorded Results Table -->
+            <table class="table text-white">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>
+                            <h1><span id="team1Header" class="badge bg-secondary badge-title"></span></h1>
+                        </th>
+                        <th>
+                            <h1><span id="team2Header" class="badge bg-warning text-dark badge-title"></span></h1>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTable"></tbody>
+            </table>
+
+            <!-- Totals Section -->
+
+            <div class="row" style="text-align: center;">
+                <h2 class="mb-4">النشرة</h2>
+                <div class="col mb-4">
+                    <h1><span id="total1" class="badge bg-secondary">0</span></h1>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" id="progress1" style="width: 0%;"></div>
+                    </div>
+                </div>
+                <div class="col mb-4">
+                    <h1><span id="total2" class="badge bg-warning text-dark">0</span></h1>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" id="progress2" style="width: 0%;"></div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <button id="resetBtn" class="btn btn-danger btn-block">إعادة تعيين</button>
     </div>
-</div>
 
-<!-- Modal -->
-<div id="winnerModal" class="modal">
-    <div class="modal-content">
-        <h5 class="modal-title">نتيجة المباراة</h5>
-        <p id="modalMessage"></p>
-        <div class="modal-footer">
-            <button id="resetModalBtn" class="btn btn-secondary">إعادة تعيين</button>
+    <!-- Reset Button -->
+    <button id="resetBtn" class="btn btn-danger btn-block floating-btn"><i class="fa-solid fa-power-off"></i></button>
+    <button id="undoBtn" class="btn btn-warning btn-block floating-btn"><i class="fa fa-undo" aria-hidden="true"></i></button>
+
+    <!-- Modal -->
+    <div id="winnerModal" class="modal fade text-dark">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">نتيجة المباراة</h5>
+                </div>
+                <div class="modal-body">
+                    <h1 id="modalMessage"></h1>
+                </div>
+                <div class="modal-footer">
+                    <button id="resetModalBtn" class="btn btn-secondary">إعادة تعيين</button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="js.js"></script>
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 
+    <script>
+        // إخفاء عنصر التحميل عند انتهاء تحميل الصفحة
+        window.onload = function() {
+            document.getElementById('loading').style.display = 'none'; // إخفاء الـ loader
+            document.body.style.visibility = 'visible'; // جعل الجسم مرئيًا
+        };
+    </script>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
