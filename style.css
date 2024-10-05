@@ -1,123 +1,84 @@
-body {
-    font-family: 'Cairo', sans-serif;
-    direction: rtl;
-    background-color: #e9ecef;
-    margin: 0;
-    padding: 0;
-}
+/* Loader CSS */
 
-.container {
-    max-width: 900px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Header */
-h1, h2 {
-    text-align: center;
-    color: #343a40;
-}
-
-/* Form styling */
-form {
-    margin: 20px 0;
-}
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-input, button {
-    width: 100%;
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    box-sizing: border-box;
-}
-
-/* Button styling */
-button {
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    opacity: 0.9;
-}
-
-/* Table styling */
-.table {
-    width: 100%;
-    margin-top: 20px;
-}
-
-th, td {
-    text-align: center;
-    padding: 15px;
-}
-
-th {
-    background-color: #007bff;
-    color: white;
-}
-
-/* Progress Bar */
-.progress {
-    height: 20px;
-    background-color: #e9ecef;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 5px 0;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: #28a745;
-    text-align: center;
-    color: white;
-    font-size: 14px;
-}
-
-/* Modal */
-.modal {
-    display: none;
+.loader {
     position: fixed;
-    z-index: 1;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 80%;
-    max-width: 500px;
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+
+/* إخفاء الجسم في البداية */
+
+body {
+    visibility: hidden;
+}
+
+
+/* الأزرار العائمة */
+
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+#resetBtn {
+    left: 20px;
+}
+
+#undoBtn {
+    right: 20px;
+}
+
+
+/* تنسيق مشترك للنماذج */
+
+.form-control {
+    height: 59px;
+    text-align: center;
+    font-size: 250%;
+    background: border-box;
+    color: #ffffff;
+}
+
+
+/* عند الضغط على العنصر أو التركيز عليه */
+
+.form-control:focus {
+    background: border-box;
+    /* نفس لون الخلفية */
+    outline: none;
+    /* إزالة الإطار الافتراضي */
+    color: #fff;
+}
+
+
+/* تنسيق المواضيع المشتركة */
+
+h1 {
     text-align: center;
 }
 
-.modal-title {
-    font-size: 24px;
-    margin-bottom: 15px;
+
+/* تنسيق الجداول */
+
+.table th,
+.table td {
+    text-align: center;
 }
 
-/* Results section */
-#resultsSection {
-    display: none;
-}
-
-#teamNamesForm {
-    margin-top: 20px;
+.badge-title {
+    font-size: 1.5rem;
 }
