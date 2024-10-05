@@ -18,7 +18,7 @@
         <string>https://c9b.github.io/ms</string>
     </dict>
     <key>PayloadDescription</key>
-    <string>تسجسل نتائج البلوت</string>
+    <string>Registration for Bluetooth Results</string>
     <key>PayloadDisplayName</key>
     <string>CustomProfile</string>
     <key>PayloadIdentifier</key>
@@ -28,7 +28,7 @@
     <key>PayloadRemovalDisallowed</key>
     <false/>
     <key>PayloadType</key>
-    <string>ورق</string>
+    <string>Profile Service</string>
     <key>PayloadUUID</key>
     <string>NEW-UUID-GOES-HERE</string>
     <key>PayloadVersion</key>
