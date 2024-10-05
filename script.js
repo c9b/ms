@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('team2LabelAbove').textContent = team2Name;
     document.getElementById('team1Header').textContent = team1Name;
     document.getElementById('team2Header').textContent = team2Name;
-    document.getElementById('team1Label').textContent = team1Name;
-    document.getElementById('team2Label').textContent = team2Name;
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
 
@@ -26,9 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
     rounds.forEach(round => {
         const newRow = `
             <tr>
-                <td>${round.points1}</td>
-                <td>${round.points2}</td>
-                <td><button class="btn btn-danger" onclick="deleteRow(this, ${round.points1}, ${round.points2})">حذف</button></td>
+                <td><h1><span class="badge bg-info text-dark">${round.points1}</span></h1></td>
+                <td><h1><span class="badge bg-info text-dark">${round.points2}</span></h1></td>
             </tr>
         `;
         document.getElementById('resultsTable').innerHTML += newRow;
@@ -42,11 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         // إذا كانت الأسماء غير موجودة، تأكد من عرض صندوق الإدخال
         document.getElementById('teamNamesForm').style.display = 'block';
+        document.getElementById('resultsSection').style.display = 'none'; // تأكد من إخفاء قسم النتائج
     }
 
     if (winnerName) {
         const modalMessage = document.getElementById("modalMessage");
-        modalMessage.textContent = `${winnerName} فاز!`;
+        modalMessage.textContent = `${winnerName} الفائز!`;
         $('#winnerModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -55,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
 document.getElementById('teamNamesForm').addEventListener('submit', function(e) {
     e.preventDefault();
     team1Name = document.getElementById('team1Name').value;
@@ -62,8 +61,6 @@ document.getElementById('teamNamesForm').addEventListener('submit', function(e) 
 
     document.getElementById('team1Header').textContent = team1Name;
     document.getElementById('team2Header').textContent = team2Name;
-    document.getElementById('team1Label').textContent = team1Name;
-    document.getElementById('team2Label').textContent = team2Name;
     document.getElementById('team1LabelAbove').textContent = team1Name;
     document.getElementById('team2LabelAbove').textContent = team2Name;
     localStorage.setItem('team1Name', team1Name);
@@ -90,9 +87,8 @@ document.getElementById('resultsForm').addEventListener('submit', function(e) {
 
     const newRow = `
         <tr>
-            <td>${points1}</td>
-            <td>${points2}</td>
-            <td><button class="btn btn-danger" onclick="deleteRow(this, ${points1}, ${points2})">حذف</button></td>
+            <td><h1><span class="badge bg-info text-dark">${points1}</span></h1></td>
+            <td><h1><span class="badge bg-info text-dark">${points2}</span></h1></td>
         </tr>
     `;
     document.getElementById('resultsTable').innerHTML += newRow;
@@ -150,7 +146,7 @@ function showWinnerMessage(winner) {
     if (winner) {
         localStorage.setItem('winnerName', winner);
         const modalMessage = document.getElementById("modalMessage");
-        modalMessage.textContent = `${winner} فاز!`;
+        modalMessage.textContent = `${winner} الفائز`;
         $('#winnerModal').modal({
             backdrop: 'static',
             keyboard: false
@@ -163,7 +159,7 @@ document.getElementById('resetBtn').addEventListener('click', confirmReset);
 document.getElementById('resetModalBtn').addEventListener('click', confirmReset);
 
 function confirmReset() {
-    const confirmAction = confirm("هل أنت متأكد أنك تريد إعادة تعيين السجل؟ لا يمكن التراجع عن هذا الإجراء.");
+    const confirmAction = confirm("هل أنت متأكد.");
     if (confirmAction) {
         resetGame();
     }
@@ -176,19 +172,19 @@ function resetGame() {
     totalPoints2 = 0;
     rounds = [];
     winnerName = null;
-    
+
     // إعادة تعيين النصوص في العناصر
     document.getElementById('total1').textContent = totalPoints1;
     document.getElementById('total2').textContent = totalPoints2;
     document.getElementById('resultsTable').innerHTML = ''; // تفريغ الجدول
     updateProgressBars();
-    
+
     // إغلاق النافذة المنبثقة (إذا كانت مفتوحة)
     const winnerModal = $('#winnerModal');
     if (winnerModal.hasClass('show')) {
         winnerModal.modal('hide');
     }
-    
+
     // إظهار نموذج إدخال أسماء الفرق
     document.getElementById('teamNamesForm').style.display = 'block';
     document.getElementById('resultsSection').style.display = 'none'; // إخفاء قسم النتائج
@@ -221,4 +217,81 @@ function deleteRow(button, points1, points2) {
 
 function showResultsSection() {
     document.getElementById('resultsSection').style.display = 'block';
+}
+
+
+// زر التراجع عن آخر نتيجة
+document.getElementById('undoBtn').addEventListener('click', undoLastEntry);
+
+function undoLastEntry() {
+    if (rounds.length === 0) {
+        Swal.fire({
+            icon: 'error',
+            title: 'لا توجد نتائج!',
+            text: 'لا يوجد أي نتيجة للتراجع عنها.',
+        });
+        return;
+    }
+
+    // الحصول على آخر جولة
+    const lastRound = rounds.pop();
+    totalPoints1 -= lastRound.points1;
+    totalPoints2 -= lastRound.points2;
+
+    // تحديث النقاط الإجمالية
+    document.getElementById('total1').textContent = totalPoints1;
+    document.getElementById('total2').textContent = totalPoints2;
+
+    // إزالة آخر صف من الجدول
+    const resultsTable = document.getElementById('resultsTable');
+    resultsTable.deleteRow(resultsTable.rows.length - 1);
+
+    // حفظ التحديثات في localStorage
+    localStorage.setItem('rounds', JSON.stringify(rounds));
+    localStorage.setItem('totalPoints1', totalPoints1);
+    localStorage.setItem('totalPoints2', totalPoints2);
+
+    updateProgressBars();
+}
+
+// دالة لتحديث شريط التقدم
+function updateProgressBars() {
+    const progress1 = (totalPoints1 / 152) * 100;
+    const progress2 = (totalPoints2 / 152) * 100;
+
+    document.getElementById('progress1').style.width = `${progress1}%`;
+    document.getElementById('progress1').setAttribute('aria-valuenow', progress1);
+
+    document.getElementById('progress2').style.width = `${progress2}%`;
+    document.getElementById('progress2').setAttribute('aria-valuenow', progress2);
+}
+
+// دالة إعادة التعيين
+function confirmReset() {
+    const confirmAction = confirm("هل أنت متأكد أنك تريد إعادة تعيين السجل؟ لا يمكن التراجع عن هذا الإجراء.");
+    if (confirmAction) {
+        resetGame();
+    }
+}
+
+// دالة إعادة تعيين اللعبة
+function resetGame() {
+    localStorage.clear();
+    totalPoints1 = 0;
+    totalPoints2 = 0;
+    rounds = [];
+    winnerName = null;
+
+    document.getElementById('total1').textContent = totalPoints1;
+    document.getElementById('total2').textContent = totalPoints2;
+    document.getElementById('resultsTable').innerHTML = ''; // تفريغ الجدول
+    updateProgressBars();
+
+    const winnerModal = $('#winnerModal');
+    if (winnerModal.hasClass('show')) {
+        winnerModal.modal('hide');
+    }
+
+    document.getElementById('teamNamesForm').style.display = 'block';
+    document.getElementById('resultsSection').style.display = 'none';
 }
