@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>PayloadContent</key>
+    <dict>
+        <key>Challenge</key>
+        <string>1asdasd212</string>
+        <key>DeviceAttributes</key>
+        <array>
+            <string>UDID</string>
+            <string>VERSION</string>
+            <string>PRODUCT</string>
+            <string>SERIAL</string>
+            <string>ICCID</string>
+        </array>
+        <key>URL</key>
+        <string>https://c9b.github.io/ms</string>
+    </dict>
+    <key>PayloadDescription</key>
+    <string>تسجسل نتائج البلوت</string>
+    <key>PayloadDisplayName</key>
+    <string>CustomProfile</string>
+    <key>PayloadIdentifier</key>
+    <string>c9b.github.io</string>
+    <key>PayloadOrganization</key>
+    <string>github.io</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadType</key>
+    <string>ورق</string>
+    <key>PayloadUUID</key>
+    <string>NEW-UUID-GOES-HERE</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+</dict>
+</plist>
